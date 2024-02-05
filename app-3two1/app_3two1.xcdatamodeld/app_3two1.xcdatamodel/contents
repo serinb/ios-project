@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="22522" systemVersion="23C71" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="Item" representedClassName="Item" syncable="YES" codeGenerationType="class">
+        <attribute name="name" optional="YES" attributeType="String"/>
+        <attribute name="timestamp" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="timestampEnd" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <relationship name="taskForTimestamp" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Task" inverseName="timestampsForTask" inverseEntity="Task"/>
+    </entity>
+    <entity name="Progress" representedClassName="Progress" syncable="YES" codeGenerationType="class">
+        <attribute name="trackedTimes" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="trackingGoal" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+    </entity>
+    <entity name="Project" representedClassName="Project" syncable="YES" codeGenerationType="class">
+        <attribute name="name" optional="YES" attributeType="String"/>
+        <attribute name="projectCompleted" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <relationship name="assignedTasks" optional="YES" toMany="YES" deletionRule="Cascade" ordered="YES" destinationEntity="Task" inverseName="originProject" inverseEntity="Task"/>
+    </entity>
+    <entity name="Tag" representedClassName="Tag" syncable="YES" codeGenerationType="class">
+        <attribute name="name" optional="YES" attributeType="String"/>
+        <relationship name="assignedTasksForTags" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Task" inverseName="assignedTags" inverseEntity="Task"/>
+    </entity>
+    <entity name="Task" representedClassName="Task" syncable="YES" codeGenerationType="class">
+        <attribute name="name" optional="YES" attributeType="String"/>
+        <attribute name="picture" optional="YES" attributeType="String"/>
+        <attribute name="taskCompleted" optional="YES" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
+        <relationship name="assignedTags" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="Tag" inverseName="assignedTasksForTags" inverseEntity="Tag"/>
+        <relationship name="originProject" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Project" inverseName="assignedTasks" inverseEntity="Project"/>
+        <relationship name="timestampsForTask" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Item" inverseName="taskForTimestamp" inverseEntity="Item"/>
+    </entity>
+</model>
